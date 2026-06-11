@@ -1,12 +1,14 @@
-'use client'; // This tells Next.js this is an interactive client-side component
+'use client'; 
 
 import { useState } from 'react';
 import { supabase } from '../utils/supabase';
+import { useRouter } from 'next/navigation'; // <-- We added the Next.js router
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
+  const router = useRouter(); // <-- We activate the router here
 
   const handleSignUp = async (e) => {
     e.preventDefault();
@@ -16,7 +18,7 @@ export default function Login() {
     });
     
     if (error) setMessage(error.message);
-    else setMessage('Success! Check your database.');
+    else setMessage('Success! You can now sign in.');
   };
 
   const handleLogin = async (e) => {
@@ -26,8 +28,12 @@ export default function Login() {
       password,
     });
 
-    if (error) setMessage(error.message);
-    else setMessage('Successfully logged in!');
+    if (error) {
+      setMessage(error.message);
+    } else {
+      setMessage('Logging you in...');
+      router.push('/dashboard'); // <-- This instantly teleports the user to the dashboard!
+    }
   };
 
   return (
@@ -53,7 +59,6 @@ export default function Login() {
             required
           />
           
-          {/* Message Display */}
           {message && <p className="text-center text-sm font-semibold text-blue-600">{message}</p>}
 
           <div className="flex gap-4 mt-2">
