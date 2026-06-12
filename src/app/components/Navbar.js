@@ -19,6 +19,9 @@ export default function Navbar() {
       </Link>
       
       <div className="flex items-center gap-6">
+        <Link href="/leaderboard" className="font-medium hover:text-blue-400 transition">
+          Leaderboard
+        </Link>
         <Link href="/dashboard" className="font-medium hover:text-blue-400 transition">
           Dashboard
         </Link>
